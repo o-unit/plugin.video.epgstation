@@ -22,5 +22,49 @@ msgid "EPGStation URL"
 msgstr "EPGStation URL"
 
 msgctxt "#30202"
-msgid "表示上限"
-msgstr "表示上限"
+msgid "動画表示上限"
+msgstr "動画表示上限"
+
+msgctxt "#30203"
+msgid "ルール表示上限"
+msgstr "ルール表示上限"
+
+msgctxt "#30204"
+msgid "有効なルールのみ表示"
+msgstr "有効なルールのみ表示"
+
+msgctxt "#30205"
+msgid "起動時の画面"
+msgstr "起動時の画面"
+
+msgctxt "#30206"
+msgid "毎回選択"
+msgstr "毎回選択"
+
+msgctxt "#30207"
+msgid "ルール一覧"
+msgstr "ルール一覧"
+
+msgctxt "#30208"
+msgid "ジャンル一覧"
+msgstr "ジャンル一覧"
+
+msgctxt "#30209"
+msgid "チャンネル一覧"
+msgstr "チャンネル一覧"
+
+msgctxt "#30210"
+msgid "再生する動画タイプ"
+msgstr "再生する動画タイプ"
+
+msgctxt "#30211"
+msgid "TS優先"
+msgstr "TS優先"
+
+msgctxt "#30212"
+msgid "エンコード済み優先"
+msgstr "エンコード済み優先"
+
+msgctxt "#30213"
+msgid "フォルダサムネイルを表示"
+msgstr "フォルダサムネイルを表示"

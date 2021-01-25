@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.epgstation"
-    version="0.0.1"
+    version="0.0.5"
     name="EPGStation"
     provider-name="l3tnun">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.simplejson"/>
+        <!-- <import addon="script.module.web-pdb" /> -->
     </requires>
     <extension point="xbmc.python.pluginsource" library="main.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="ja">EPGStation for kodi</summary>
+        <description lang="ja"></description>
+        <source>https://github.com/l3tnun/plugin.video.epgstation</source>
         <assets>
             <icon>icon.png</icon>
+            <banner></banner> <!-- optional -->
+            <clearlogo></clearlogo> <!-- optional  -->
+            <screenshot></screenshot> <!-- optional, max 10  -->
         </assets>
     </extension>
 </addon>

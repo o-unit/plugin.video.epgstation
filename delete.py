@@ -12,9 +12,10 @@ settings = xbmcaddon.Addon('plugin.video.epgstation')
 plugin = settings.getAddonInfo('name')
 
 if __name__ == '__main__' and len(sys.argv) == 3:
+    # web_pdb.set_trace()
     server_url = settings.getSetting('server_url')
-    videoId = sys.argv[1];
-    fileName = sys.argv[2];
+    videoId = sys.argv[1]
+    fileName = sys.argv[2]
     opener = urllib2.build_opener(urllib2.HTTPHandler)
 
     dialog = xbmcgui.Dialog()

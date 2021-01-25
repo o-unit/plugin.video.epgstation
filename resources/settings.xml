@@ -3,6 +3,11 @@
     <!-- General -->
     <category label="30200">
         <setting id="server_url" type="text" label="30201" default="" />
-        <setting id="recorded_length" type="text" label="30202" default=1000 />
+        <setting id="recorded_length" type="number" label="30202" default=1000 />
+        <setting id="rules_length" type="number" label="30203" default=1000 />
+        <setting id="rules_enableonly" type="bool" label="30204" default="false" />
+        <setting id="folder_showthumbnail" type="bool" label="30213" default="false" />
+        <setting id="select_home" type="select" label="30205" lvalues="30206|30207|30208|30209" />
+        <setting id="video_playtype" type="select" label="30210" lvalues="30211|30212" />
     </category>
 </settings>
