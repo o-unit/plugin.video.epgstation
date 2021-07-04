@@ -7,12 +7,11 @@ import xbmcplugin
 import xbmcaddon
 import datetime
 import simplejson as json
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import urlutil
 # import web_pdb
 
-from urlparse import parse_qsl, urljoin
-from urllib import urlencode
+from urllib.parse import urlencode, parse_qsl, urljoin
 from consts import *
 
 # Plugin Info
@@ -67,8 +66,8 @@ def get_videoCount(rule=-1, genre=-1, channel=-1):
     # 動画一覧取得時
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(urlInfo["url"], 'api/recorded', param)
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     return json.loads(response.read())['total']
 
 
@@ -93,7 +92,6 @@ def set_thumbnail(listitem, rule=-1, genre=-1, channel=-1, thumbnailId=-1, offse
     # サムネイルIDが指定されている場合
     if thumbnailId != -1:
         thumbnail_url = get_url(server_url, 'api/thumbnails/' + str(thumbnailId))
-        listitem.setIconImage(thumbnail_url)
         listitem.setArt({
             'poster': thumbnail_url,
             'fanart': thumbnail_url,
@@ -116,12 +114,11 @@ def set_thumbnail(listitem, rule=-1, genre=-1, channel=-1, thumbnailId=-1, offse
 
         # 動画取得
         urlInfo = urlutil.getUrlInfo(server_url)
-        request = urllib2.Request(get_url(urlInfo["url"], 'api/recorded', param), headers=urlInfo["headers"])
-        response = urllib2.urlopen(request)
+        request = urllib.request.Request(get_url(urlInfo["url"], 'api/recorded', param), headers=urlInfo["headers"])
+        response = urllib.request.urlopen(request)
         video = json.loads(response.read())['records'][0]
 
         thumbnail_url = get_url(server_url, 'api/thumbnails/' + str(video.get('thumbnails')[0]))
-        listitem.setIconImage(thumbnail_url)
         listitem.setArt({
             'poster': thumbnail_url,
             'fanart': thumbnail_url,
@@ -129,7 +126,7 @@ def set_thumbnail(listitem, rule=-1, genre=-1, channel=-1, thumbnailId=-1, offse
             'thumb': thumbnail_url
         })
     except:
-        print 'thumbnail get error'
+        print( 'thumbnail get error' )
 
 
 def select_list():
@@ -171,8 +168,8 @@ def list_rules(offset=0):
     # ルール一覧取得
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(urlInfo["url"], 'api/rules', param)
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     rules = json.loads(response.read())["rules"]
 
     addList_rule({"id":-1, "searchOption": {"keyword": "全ての動画"}})
@@ -200,8 +197,8 @@ def list_genre():
     # ジャンル一覧取得
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(urlInfo["url"], 'api/recorded/options')
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     addList_genre({"genre":-1, "keyword": "全ての動画"})
     genres = json.loads(response.read())["genres"]
     for genre in genres:
@@ -222,14 +219,14 @@ def list_channels():
     # チャンネル別件数一覧取得
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(urlInfo["url"], 'api/recorded/options')
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     channel_nums = json.loads(response.read())["channels"]
 
     # 放送局情報取得
     url = get_url(urlInfo["url"], 'api/channels')
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     channels = json.loads(response.read())
 
     addList_channel({"channelId":-1, "name": "全ての動画"})
@@ -268,8 +265,8 @@ def list_videos(rule=-1, genre=-1, channel=-1, offset=0):
     # 動画一覧取得時
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(urlInfo["url"], 'api/recorded', param)
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     videos = json.loads(response.read())['records']
     for video in videos:
         addList_video(video)
@@ -361,7 +358,7 @@ def addList_video(video):
             info['plot'] = video['description'] + '\n\n' + video['extended']
             info['plotoutline'] = video['description']
     except:
-        print 'error'
+        print( 'error' )
 
     li.setInfo('video', info)
 
@@ -370,7 +367,7 @@ def addList_video(video):
     menuList = []
     for file in video['videoFiles']:
         videourl = get_url(sys.argv[0], '', {'action':'play_video', 'recid':video['id'], 'vid':file['id']})
-        menuList.append( ('再生 : '.decode('utf-8') + file['name'], 'PlayMedia(' + videourl + ')') )
+        menuList.append( ('再生 : ' + file['name'], 'PlayMedia(' + videourl + ')') )
     
     # デフォルトの再生ファイルを決定 (TODO: エンコード名を取得して優先順位を設定できるようにしたい)
     defaultType = 'encoded' if settings.getSettingInt('video_playtype') == 1 else 'ts'
@@ -407,8 +404,8 @@ def play_video(recid, vid):
     # 動画一覧取得時
     urlInfo = urlutil.getUrlInfo(server_url)
     url = get_url(server_url, 'api/recorded/' + str(recid), params)
-    request = urllib2.Request(url=url, headers=urlInfo["headers"])
-    response = urllib2.urlopen(request)
+    request = urllib.request.Request(url=url, headers=urlInfo["headers"])
+    response = urllib.request.urlopen(request)
     video = json.loads(response.read())
 
     # 動画ファイル情報を追加
@@ -450,7 +447,7 @@ def play_video(recid, vid):
             info['plot'] = video['description'] + '\n\n' + video['extended']
             info['plotoutline'] = video['description']
     except:
-        print 'error'
+        print( 'error' )
 
     params = {'isDownload':False}
     li.setPath( get_url(server_url, 'api/videos/' + str(vid), params) )

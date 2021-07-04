@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.epgstation"
-    version="0.0.5"
+    version="0.1.0"
     name="EPGStation"
     provider-name="l3tnun">
     <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.simplejson"/>
         <!-- <import addon="script.module.web-pdb" /> -->
     </requires>
